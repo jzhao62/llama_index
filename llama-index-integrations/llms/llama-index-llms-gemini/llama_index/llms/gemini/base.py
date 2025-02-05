@@ -33,6 +33,7 @@ from .utils import (
 
 GEMINI_MODELS = (
     "models/gemini-2.0-flash-exp",
+    "models/gemini-2.0-flash-001",
     # Gemini 1.0 Pro Vision has been deprecated on July 12, 2024.
     # According to official recommendations, switch the default model to gemini-1.5-flash
     "models/gemini-1.5-flash",
@@ -192,6 +193,7 @@ class Gemini(CustomLLM):
         )
         return completion_from_gemini_response(result)
 
+    @llm_completion_callback()
     async def acomplete(
         self, prompt: str, formatted: bool = False, **kwargs: Any
     ) -> CompletionResponse:
@@ -201,6 +203,7 @@ class Gemini(CustomLLM):
         )
         return completion_from_gemini_response(result)
 
+    @llm_completion_callback()
     def stream_complete(
         self, prompt: str, formatted: bool = False, **kwargs: Any
     ) -> CompletionResponseGen:
@@ -223,6 +226,7 @@ class Gemini(CustomLLM):
         )
         return chat_from_gemini_response(response)
 
+    @llm_chat_callback()
     async def achat(
         self, messages: Sequence[ChatMessage], **kwargs: Any
     ) -> ChatResponse:
@@ -268,6 +272,7 @@ class Gemini(CustomLLM):
 
         return gen()
 
+    @llm_chat_callback()
     async def astream_chat(
         self, messages: Sequence[ChatMessage], **kwargs: Any
     ) -> ChatResponseAsyncGen:
